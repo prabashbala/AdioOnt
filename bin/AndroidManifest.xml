@@ -22,8 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+         <service android:name="PowerChecker" android:label="Power Checker"/>
     </application>
-    
-    <service android:name="PowerChecker" android:label="Power Checker"/>
 
 </manifest>
