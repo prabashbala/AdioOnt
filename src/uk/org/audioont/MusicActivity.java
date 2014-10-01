@@ -125,7 +125,7 @@ public class MusicActivity extends Activity {
 	public void getSongList(){
 		//query external audio
 		ContentResolver musicResolver = getContentResolver();
-		Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+		Uri musicUri = android.provider.MediaStore.Audio.Media.INTERNAL_CONTENT_URI;
 		Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
 		//iterate over results if valid
 		if(musicCursor!=null && musicCursor.moveToFirst()){
