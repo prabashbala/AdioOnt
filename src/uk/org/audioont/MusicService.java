@@ -91,7 +91,7 @@ MediaPlayer.OnCompletionListener {
 		long currSong = playSong.getID();
 		//set uri
 		Uri trackUri = ContentUris.withAppendedId(
-				android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+				android.provider.MediaStore.Audio.Media.INTERNAL_CONTENT_URI,
 				currSong);
 		//set the data source
 		try{ 
