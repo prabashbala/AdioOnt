@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Service;
 import android.content.ContentUris;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -35,6 +36,7 @@ MediaPlayer.OnCompletionListener {
 
 	public void onCreate(){
 		//create the service
+	     System.out.println("onCreate*************");
 		super.onCreate();
 		//initialize position
 		songPosn=0;
@@ -45,6 +47,7 @@ MediaPlayer.OnCompletionListener {
 	}
 
 	public void initMusicPlayer(){
+		System.out.println("initMusicPlayer*************");
 		//set player properties
 		player.setWakeMode(getApplicationContext(), 
 				PowerManager.PARTIAL_WAKE_LOCK);
@@ -62,7 +65,9 @@ MediaPlayer.OnCompletionListener {
 
 	//binder
 	public class MusicBinder extends Binder {
+		
 		MusicService getService() { 
+			System.out.println("MusicBinder*************");
 			return MusicService.this;
 		}
 	}
@@ -76,6 +81,7 @@ MediaPlayer.OnCompletionListener {
 	//release resources when unbind
 	@Override
 	public boolean onUnbind(Intent intent){
+		System.out.println("MusicBinder*************");
 		player.stop();
 		player.release();
 		return false;
@@ -83,6 +89,7 @@ MediaPlayer.OnCompletionListener {
 
 	//play a song
 	public void playSong(){
+		System.out.println("playSong*************");
 		//play
 		player.reset();
 		//get song
@@ -105,6 +112,7 @@ MediaPlayer.OnCompletionListener {
 
 	//set the song
 	public void setSong(int songIndex){
+		System.out.println("setSong*************");
 		songPosn=songIndex;	
 	}
 
@@ -123,6 +131,15 @@ MediaPlayer.OnCompletionListener {
 	public void onPrepared(MediaPlayer mp) {
 		//start playback
 		mp.start();
+	}
+	
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		Log.d("MyApp","I am here");
+		PowerBroadcastReceiver receiver = new PowerBroadcastReceiver();
+		IntentFilter filter = new IntentFilter(Intent.ACTION_POWER_CONNECTED);
+		registerReceiver(receiver, filter);
+		return START_STICKY;
 	}
 
 }
